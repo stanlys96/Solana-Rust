@@ -13,6 +13,7 @@ const links: { label: string; path: string }[] = [
   // More links...
   { label: 'Home', path: '/' },
   { label: 'Account', path: '/account' },
+  { label: 'Votingdapp Program', path: '/votingdapp' },
 ]
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   )
 }
+
 // Patch BigInt so we can log it using JSON.stringify without any errors
 declare global {
   interface BigInt {
