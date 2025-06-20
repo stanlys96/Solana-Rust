@@ -2,12 +2,12 @@
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
  * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/votingdapp.json`.
+ * IDL can be found at `target/idl/crudapp.json`.
  */
-export type Votingdapp = {
+export type Crudapp = {
   address: 'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H'
   metadata: {
-    name: 'votingdapp'
+    name: 'crudapp'
     version: '0.1.0'
     spec: '0.1.0'
     description: 'Created with Anchor'
@@ -23,7 +23,7 @@ export type Votingdapp = {
           signer: true
         },
         {
-          name: 'votingdapp'
+          name: 'crudapp'
           writable: true
         },
       ]
@@ -34,7 +34,7 @@ export type Votingdapp = {
       discriminator: [106, 227, 168, 59, 248, 27, 150, 101]
       accounts: [
         {
-          name: 'votingdapp'
+          name: 'crudapp'
           writable: true
         },
       ]
@@ -45,7 +45,7 @@ export type Votingdapp = {
       discriminator: [11, 18, 104, 9, 104, 174, 59, 33]
       accounts: [
         {
-          name: 'votingdapp'
+          name: 'crudapp'
           writable: true
         },
       ]
@@ -61,7 +61,7 @@ export type Votingdapp = {
           signer: true
         },
         {
-          name: 'votingdapp'
+          name: 'crudapp'
           writable: true
           signer: true
         },
@@ -77,7 +77,7 @@ export type Votingdapp = {
       discriminator: [198, 51, 53, 241, 116, 29, 126, 194]
       accounts: [
         {
-          name: 'votingdapp'
+          name: 'crudapp'
           writable: true
         },
       ]
@@ -91,13 +91,13 @@ export type Votingdapp = {
   ]
   accounts: [
     {
-      name: 'votingdapp'
+      name: 'crudapp'
       discriminator: [255, 176, 4, 245, 188, 253, 124, 25]
     },
   ]
   types: [
     {
-      name: 'votingdapp'
+      name: 'crudapp'
       type: {
         kind: 'struct'
         fields: [

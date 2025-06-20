@@ -7,18 +7,18 @@ import * as anchor from '@coral-xyz/anchor'
 
 const IDL = require('../target/idl/voting.json')
 
-const votingAddress = new PublicKey('JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H')
+const votingAddress = new PublicKey('DoNJQRZeEF4Hgv2PEeD5ATaEEUBay2hPQLVuEaAteQPG')
 
 describe('Voting', () => {
   let context
   let provider
-  let votingProgram
+  anchor.setProvider(anchor.AnchorProvider.env())
+  let votingProgram = anchor.workspace.Voting as Program<Voting>
 
   beforeAll(async () => {
-    context = await startAnchor('', [{ name: 'voting', programId: votingAddress }], [])
-    provider = new BankrunProvider(context)
-
-    votingProgram = new Program<Voting>(IDL, provider)
+    // context = await startAnchor('', [{ name: 'voting', programId: votingAddress }], [])
+    // provider = new BankrunProvider(context)
+    // votingProgram = new Program<Voting>(IDL, provider)
   })
 
   it('Initialize Poll', async () => {
@@ -46,11 +46,11 @@ describe('Voting', () => {
   })
 
   it('initialize candidate', async () => {
-    await votingProgram.methods.initializeCandidate('Walao eh', new anchor.BN(1)).rpc()
-    await votingProgram.methods.initializeCandidate('heho', new anchor.BN(1)).rpc()
+    await votingProgram.methods.initializeCandidate('Crunchy', new anchor.BN(1)).rpc()
+    await votingProgram.methods.initializeCandidate('Smooth', new anchor.BN(1)).rpc()
 
     const [walaoEhAddress] = PublicKey.findProgramAddressSync(
-      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from('Walao eh')],
+      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from('Crunchy')],
       votingAddress,
     )
     const walaoEhCandidate = await votingProgram.account.candidate.fetch(walaoEhAddress)
@@ -58,7 +58,7 @@ describe('Voting', () => {
     expect(walaoEhCandidate.candidateVotes.toNumber()).toEqual(0)
 
     const [hehoAddress] = PublicKey.findProgramAddressSync(
-      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from('heho')],
+      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from('Smooth')],
       votingAddress,
     )
     const hehoCandidate = await votingProgram.account.candidate.fetch(hehoAddress)
@@ -67,9 +67,9 @@ describe('Voting', () => {
   })
 
   it('vote', async () => {
-    await votingProgram.methods.vote('Walao eh', new anchor.BN(1)).rpc()
+    await votingProgram.methods.vote('Crunchy', new anchor.BN(1)).rpc()
     const [walaoEhAddress] = PublicKey.findProgramAddressSync(
-      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from('Walao eh')],
+      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from('Crunchy')],
       votingAddress,
     )
     const walaoEhCandidate = await votingProgram.account.candidate.fetch(walaoEhAddress)
