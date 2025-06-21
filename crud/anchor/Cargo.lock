@@ -465,19 +465,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c74b8349d32d297c9134b8c88677813a227df8f779daa29bfc29c183fe3dca6"
 
 [[package]]
-name = "counter"
-version = "0.1.0"
-dependencies = [
- "anchor-lang",
-]
-
-[[package]]
 name = "cpufeatures"
 version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "53fe5e26ff1b7aef8bca9c6080520cfb8d9333c7568e1829cef191a9723e5504"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "crudapp"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
 ]
 
 [[package]]
