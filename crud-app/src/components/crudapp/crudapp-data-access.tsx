@@ -7,6 +7,7 @@ import {
   getIncrementInstruction,
   getInitializeInstruction,
   getSetInstruction,
+  getJournalProgram,
 } from '@project/anchor'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
@@ -17,6 +18,14 @@ import { useWalletTransactionSignAndSend } from '../solana/use-wallet-transactio
 import { useClusterVersion } from '@/components/cluster/use-cluster-version'
 import { toastTx } from '@/components/toast-tx'
 import { useWalletUiSigner } from '@/components/solana/use-wallet-ui-signer'
+import { PublicKey } from '@solana/web3.js'
+import { useAnchorProvider } from '../solana/solana-provider'
+
+interface CreateEntryArgs {
+  title: string
+  message: string
+  owner: PublicKey
+}
 
 export function useCrudappProgramId() {
   const { cluster } = useWalletUi()
@@ -139,4 +148,64 @@ function useCrudappAccountsQueryKey() {
   const { cluster } = useWalletUi()
 
   return ['crudapp', 'accounts', { cluster }]
+}
+
+export const createEntry = async ({ crudapp }: { crudapp: CrudappAccount }) => {
+  const { cluster } = useWalletUi()
+  const provider = useAnchorProvider()
+  const program = getJournalProgram(provider)
+  const account = useCrudappAccountsQuery()
+
+  return useMutation<string, Error, CreateEntryArgs>({
+    mutationKey: ['journalEntry', 'create', { cluster }],
+    mutationFn: async ({ title, message, owner }) => {
+      return program.methods.createJournalEntry(title, message).rpc()
+    },
+    onSuccess: (signature) => {
+      alert(signature)
+      account.refetch()
+    },
+    onError: (error) => {
+      alert(`Error creating entry: ${error.message}`)
+    },
+  })
+}
+
+export const updateEntry = async ({ crudapp }: { crudapp: CrudappAccount }) => {
+  const { cluster } = useWalletUi()
+  const provider = useAnchorProvider()
+  const program = getJournalProgram(provider)
+  const account = useCrudappAccountsQuery()
+
+  return useMutation<string, Error, CreateEntryArgs>({
+    mutationKey: ['journalEntry', 'update', { cluster }],
+    mutationFn: async ({ title, message }) => {
+      return program.methods.updateJournalEntry(title, message).rpc()
+    },
+    onSuccess: (signature) => {
+      alert(signature)
+      account.refetch()
+    },
+    onError: (error) => {
+      alert(`Error creating entry: ${error.message}`)
+    },
+  })
+}
+
+export const deleteEntry = async ({ crudapp }: { crudapp: CrudappAccount }) => {
+  const { cluster } = useWalletUi()
+  const provider = useAnchorProvider()
+  const program = getJournalProgram(provider)
+  const account = useCrudappAccountsQuery()
+
+  return useMutation({
+    mutationKey: ['journalEntry', 'delete', { cluster }],
+    mutationFn: (title: string) => {
+      return program.methods.deleteJournalEntry(title).rpc()
+    },
+    onSuccess: (signature) => {
+      alert(signature)
+      account.refetch()
+    },
+  })
 }

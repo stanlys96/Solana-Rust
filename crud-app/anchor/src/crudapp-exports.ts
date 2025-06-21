@@ -4,6 +4,8 @@ import { SolanaClusterId } from '@wallet-ui/react'
 import { getProgramAccountsDecoded } from './helpers/get-program-accounts-decoded'
 import { Crudapp, CRUDAPP_DISCRIMINATOR, CRUDAPP_PROGRAM_ADDRESS, getCrudappDecoder } from './client/js'
 import CrudappIDL from '../target/idl/crudapp.json'
+import { AnchorProvider, Program } from '@coral-xyz/anchor'
+import type { Crudapp as CrudappType } from '../target/types/crudapp'
 
 export type CrudappAccount = Account<Crudapp, string>
 
@@ -31,4 +33,8 @@ export function getCrudappProgramAccounts(rpc: SolanaClient['rpc']) {
     filter: getBase58Decoder().decode(CRUDAPP_DISCRIMINATOR),
     programAddress: CRUDAPP_PROGRAM_ADDRESS,
   })
+}
+
+export function getJournalProgram(provider: AnchorProvider) {
+  return new Program(CrudappIDL as CrudappType, provider)
 }
