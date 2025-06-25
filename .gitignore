@@ -1,0 +1,27 @@
+# === Build output ===
+/target/
+target
+
+# === IDEs and editors ===
+**/*.swp
+**/*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === Rust/Cargo specific ===
+/Cargo.lock    # (optional — see note below)
+/*.rs.bk       # Rust backups, if any
+
+# === Testing and logs ===
+*.log
+*.tmp
+
+# === Dependency tools (if any used) ===
+/node_modules/       # if mixed with JS (e.g., frontend)
+/dist/               # e.g., WebAssembly or static frontend builds
+node_modules
